@@ -1,117 +1,128 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#1a1a2e">
     <meta name="description" content="Escucha tu emisora de FM favorita en vivo">
     <meta name="format-detection" content="telephone=no">
-    
+
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="FM Fénix">
-    <link rel="apple-touch-icon" href="icon.svg">
-    
+    <meta name="apple-mobile-web-app-title" content="FM Urbana">
+    <link rel="apple-touch-icon" href="icon.png">
+
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="icon.svg">
-    
-    <title>FM Fénix - En Vivo</title>
+    <link rel="icon" type="image/png" href="icon.png">
+
+    <title>FM Urbana 103.5 - En Vivo</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <div class="container">
         <!-- Partículas de fondo -->
         <div id="particles"></div>
-        
+
         <!-- Cabecera -->
         <header class="header">
             <div class="live-badge">
                 <span class="pulse"></span>
                 EN VIVO
             </div>
-            <h1 class="station-name">🎵 FM Fénix</h1>
+            <h1 class="station-name">🎵 FM Urbana 103.5</h1>
             <p class="station-slogan">La mejor música, siempre contigo</p>
         </header>
-        
+
         <!-- Visualizador de audio -->
         <div class="visualizer-container">
             <canvas id="visualizer" width="400" height="100"></canvas>
         </div>
-        
+
         <!-- Reproductor principal -->
         <div class="player-card">
             <div class="now-playing">
                 <div class="album-art">
-                    <div class="vinyl-disc"></div>
+                    <img src="icon.png" alt="Urbana Logo" class="station-logo">
                 </div>
                 <div class="track-info">
-                    <h2 id="track-title">FM Fénix en Vivo</h2>
+                    <h2 id="track-title">FM Urbana en Vivo</h2>
                     <p id="track-artist">Transmisión 24/7</p>
                 </div>
             </div>
-            
+
             <div class="player-controls">
                 <button class="control-btn" id="volume-btn" title="Volumen">
                     <svg viewBox="0 0 24 24" width="24" height="24">
-                        <path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3z"/>
-                        <path fill="currentColor" d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+                        <path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3z" />
+                        <path fill="currentColor"
+                            d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" />
                     </svg>
                 </button>
-                
+
                 <button class="play-btn" id="playPauseBtn">
                     <svg id="playIcon" viewBox="0 0 24 24" width="40" height="40">
-                        <path fill="currentColor" d="M8 5v14l11-7z"/>
+                        <path fill="currentColor" d="M8 5v14l11-7z" />
                     </svg>
                     <svg id="pauseIcon" viewBox="0 0 24 24" width="40" height="40" style="display: none;">
-                        <path fill="currentColor" d="M6 4h4v16H6zm8 0h4v16h-4z"/>
+                        <path fill="currentColor" d="M6 4h4v16H6zm8 0h4v16h-4z" />
                     </svg>
                 </button>
-                
+
                 <button class="control-btn" id="muteBtn" title="Silenciar">
                     <svg viewBox="0 0 24 24" width="24" height="24">
-                        <path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                        <path fill="currentColor"
+                            d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
                     </svg>
                 </button>
             </div>
-            
+
             <!-- Control de volumen deslizante -->
             <div class="volume-slider-container" id="volumeSliderContainer">
                 <input type="range" id="volumeSlider" min="0" max="100" value="80" class="volume-slider">
                 <span id="volumeValue">80%</span>
             </div>
-            
+
             <!-- Estado de conexión -->
             <div class="connection-status" id="connectionStatus">
                 <span class="status-dot"></span>
                 <span id="statusText">Conectando...</span>
             </div>
         </div>
-        
+
         <!-- Información adicional -->
         <div class="info-section">
             <div class="info-card">
                 <h3>📻 Escúchanos</h3>
-                <p>FM 94.9 MHz</p>
+                <p>FM 103.5 MHz</p>
             </div>
-            <a href="https://api.whatsapp.com/send?phone=5493775449138" target="_blank" class="info-card clickable">
+            <a href="https://api.whatsapp.com/send?phone=5493775474709" target="_blank" class="info-card clickable">
                 <h3>📞 WhatsApp</h3>
                 <p>Enviar Mensaje</p>
             </a>
-            <a href="https://www.fmfenixdigital.com.ar/" target="_blank" class="info-card clickable">
-                <h3>🌐 Web</h3>
-                <p>www.fmfenixdigital.com.ar</p>
+            <a href="https://www.facebook.com/urbanafm.montecaseros" target="_blank" class="info-card clickable">
+                <h3>📘 Facebook</h3>
+                <p>Urbana FM</p>
             </a>
         </div>
-        
+
         <!-- Reproductor de audio oculto -->
         <audio id="radioPlayer" preload="none" autoplay></audio>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>Desarrollado por &copy; 2026 Digimedios Apps</p>
+            <p>Todos los derechos reservados.</p>
+        </footer>
     </div>
-    
+
     <!-- Toast para notificaciones -->
     <div id="toast" class="toast"></div>
-    
+
     <script src="script.js"></script>
 </body>
+
 </html>

@@ -1,6 +1,6 @@
 {
-    "name": "FM Radio - En Vivo",
-    "short_name": "FM Radio",
+    "name": "FM Urbana 103.5 - En Vivo",
+    "short_name": "FM Urbana",
     "description": "Escucha tu emisora de FM favorita en vivo",
     "theme_color": "#1a1a2e",
     "background_color": "#0f0f1a",
@@ -8,18 +8,18 @@
     "orientation": "portrait",
     "scope": "./",
     "start_url": "index.html",
-    "id": "fm-radio-fenix",
+    "id": "fm-radio-urbana",
     "icons": [
         {
-            "src": "icon.svg",
+            "src": "icon.png",
             "sizes": "192x192 512x512",
-            "type": "image/svg+xml",
+            "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "icon.svg",
+            "src": "icon.png",
             "sizes": "192x192 512x512",
-            "type": "image/svg+xml",
+            "type": "image/png",
             "purpose": "maskable"
         }
     ],

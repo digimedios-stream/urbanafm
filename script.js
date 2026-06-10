@@ -1,12 +1,12 @@
 // Configuración
 const CONFIG = {
     // CAMBIA ESTE ENLACE POR EL DE TU STREAMING
-    STREAM_URL: 'https://stream.zeno.fm/xs0emmvf5a0uv',
+    STREAM_URL: 'https://stream.zeno.fm/e8nskpc98f0uv',
     
     // Mount point para la metadata (obtenido de la URL del stream)
-    MOUNT_POINT: 'xs0emmvf5a0uv',
+    MOUNT_POINT: 'e8nskpc98f0uv',
     
-    STATION_NAME: 'FM Fénix',
+    STATION_NAME: 'FM Urbana 103.5',
     DEFAULT_VOLUME: 0.8,
     RETRY_DELAY: 5000,
     MAX_RETRIES: 10
@@ -139,9 +139,9 @@ class RadioPlayer {
             
             let x = 0;
             const gradient = this.visualizerCtx.createLinearGradient(0, 0, width, 0);
-            gradient.addColorStop(0, '#e94560');
-            gradient.addColorStop(0.5, '#533483');
-            gradient.addColorStop(1, '#e94560');
+            gradient.addColorStop(0, '#fa195b');
+            gradient.addColorStop(0.5, '#990040');
+            gradient.addColorStop(1, '#fa195b');
             
             this.visualizerCtx.fillStyle = gradient;
             
@@ -335,7 +335,9 @@ class RadioPlayer {
         
         for (let i = 0; i < particleCount; i++) {
             const particle = document.createElement('div');
-            particle.className = 'particle';
+            const shapes = ['circle', 'ring', 'square'];
+            const shapeClass = shapes[Math.floor(Math.random() * shapes.length)];
+            particle.className = `particle ${shapeClass}`;
             
             const size = Math.random() * 200 + 50;
             particle.style.width = size + 'px';
