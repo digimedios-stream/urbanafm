@@ -132,11 +132,16 @@ class RadioPlayer {
             this.highEq.frequency.value = 3200;
             this.highEq.gain.value = 0;
             
+            // Nodo de ganancia maestra para potenciar el volumen
+            this.masterGain = this.audioContext.createGain();
+            this.masterGain.gain.value = 1.6; // Aumenta el volumen general en un 60%
+            
             // Conectar toda la cadena de audio
             this.source.connect(this.lowEq);
             this.lowEq.connect(this.midEq);
             this.midEq.connect(this.highEq);
-            this.highEq.connect(this.analyser);
+            this.highEq.connect(this.masterGain);
+            this.masterGain.connect(this.analyser);
             this.analyser.connect(this.audioContext.destination);
             
             this.startVisualization();
