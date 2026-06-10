@@ -55,8 +55,9 @@ class RadioPlayer {
         // Configurar event listeners
         this.setupEventListeners();
         
-        // Configurar visualizador
+        // Configurar visualizador y ecualizador
         this.setupVisualizer();
+        this.setupEq();
         
         // Inicializar UI
         this.updateVolumeUI();
@@ -113,7 +114,29 @@ class RadioPlayer {
             this.analyser.fftSize = 256;
             
             this.source = this.audioContext.createMediaElementSource(this.audio);
-            this.source.connect(this.analyser);
+            
+            // Configurar nodos del Ecualizador (Bajos, Medios, Agudos)
+            this.lowEq = this.audioContext.createBiquadFilter();
+            this.lowEq.type = 'lowshelf';
+            this.lowEq.frequency.value = 320;
+            this.lowEq.gain.value = 0;
+
+            this.midEq = this.audioContext.createBiquadFilter();
+            this.midEq.type = 'peaking';
+            this.midEq.frequency.value = 1000;
+            this.midEq.Q.value = 0.5;
+            this.midEq.gain.value = 0;
+
+            this.highEq = this.audioContext.createBiquadFilter();
+            this.highEq.type = 'highshelf';
+            this.highEq.frequency.value = 3200;
+            this.highEq.gain.value = 0;
+            
+            // Conectar toda la cadena de audio
+            this.source.connect(this.lowEq);
+            this.lowEq.connect(this.midEq);
+            this.midEq.connect(this.highEq);
+            this.highEq.connect(this.analyser);
             this.analyser.connect(this.audioContext.destination);
             
             this.startVisualization();
@@ -402,6 +425,62 @@ class RadioPlayer {
             
             // Actualizar el título de la pestaña del navegador
             document.title = `${title} - ${CONFIG.STATION_NAME}`;
+        }
+    }
+
+    setupEq() {
+        this.eqCard = document.getElementById('eqCard');
+        this.eqDropdown = document.getElementById('eqDropdown');
+        this.currentEqText = document.getElementById('current-eq');
+        this.presetBtns = document.querySelectorAll('.eq-preset-btn');
+        
+        this.presets = {
+            'Normal': { low: 0, mid: 0, high: 0 },
+            'Graves': { low: 6, mid: -1, high: 1 },
+            'Voces': { low: -2, mid: 4, high: 1 },
+            'Electrónica': { low: 5, mid: -2, high: 4 }
+        };
+        
+        if (!this.eqCard) return;
+        
+        this.eqCard.addEventListener('click', (e) => {
+            if (!e.target.classList.contains('eq-preset-btn')) {
+                this.eqDropdown.classList.toggle('show');
+            }
+        });
+        
+        document.addEventListener('click', (e) => {
+            if (!this.eqCard.contains(e.target)) {
+                this.eqDropdown.classList.remove('show');
+            }
+        });
+        
+        this.presetBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const presetName = btn.getAttribute('data-preset');
+                this.applyEqPreset(presetName);
+                
+                this.presetBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                this.currentEqText.textContent = btn.textContent;
+                this.eqDropdown.classList.remove('show');
+                this.showToast(`🎛️ Ecualizador: ${btn.textContent}`);
+            });
+        });
+    }
+    
+    applyEqPreset(presetName) {
+        if (!this.lowEq || !this.midEq || !this.highEq) return;
+        
+        const preset = this.presets[presetName];
+        if (preset) {
+            // Suavizar la transición del audio para que no haya clips
+            const now = this.audioContext.currentTime;
+            this.lowEq.gain.setTargetAtTime(preset.low, now, 0.1);
+            this.midEq.gain.setTargetAtTime(preset.mid, now, 0.1);
+            this.highEq.gain.setTargetAtTime(preset.high, now, 0.1);
         }
     }
 }

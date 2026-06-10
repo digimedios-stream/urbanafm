@@ -534,3 +534,58 @@ body {
 .floating-install-btn.show {
     transform: scale(1);
 }
+
+/* EQ Card & Dropdown */
+.eq-card {
+    position: relative;
+    cursor: pointer;
+}
+
+.eq-dropdown {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    width: 100%;
+    background: rgba(15, 16, 26, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
+    z-index: 100;
+}
+
+.eq-dropdown.show {
+    display: flex;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.eq-preset-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    text-align: left;
+}
+
+.eq-preset-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.eq-preset-btn.active {
+    background: var(--gradient);
+    font-weight: bold;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

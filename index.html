@@ -95,9 +95,15 @@
 
         <!-- Información adicional -->
         <div class="info-section">
-            <div class="info-card">
-                <h3>📻 Escúchanos</h3>
-                <p>FM 103.5 MHz</p>
+            <div class="info-card eq-card" id="eqCard">
+                <h3>🎛️ Ecualizador</h3>
+                <p id="current-eq">Normal</p>
+                <div class="eq-dropdown" id="eqDropdown">
+                    <button class="eq-preset-btn active" data-preset="Normal">Normal</button>
+                    <button class="eq-preset-btn" data-preset="Graves">Bajos Profundos</button>
+                    <button class="eq-preset-btn" data-preset="Voces">Voces Claras</button>
+                    <button class="eq-preset-btn" data-preset="Electrónica">Electrónica</button>
+                </div>
             </div>
             <a href="https://api.whatsapp.com/send?phone=5493775474709" target="_blank" class="info-card clickable">
                 <h3>📞 WhatsApp</h3>
