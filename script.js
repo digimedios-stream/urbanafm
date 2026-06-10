@@ -410,10 +410,69 @@ class RadioPlayer {
 document.addEventListener('DOMContentLoaded', () => {
     new RadioPlayer();
     
+    // Clear caches on load to ensure instant updates (PWA refresh)
+    if ('caches' in window) {
+        caches.keys().then(keys => {
+            keys.forEach(key => caches.delete(key));
+        });
+    }
+
     // Registrar Service Worker para PWA
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('sw.js')
             .then(() => console.log('Service Worker registrado'))
             .catch(err => console.log('Error en Service Worker:', err));
     }
+});
+
+// PWA Install Prompt Logic
+let deferredPrompt;
+const installPopup = document.getElementById('installPopup');
+const installBtnPopup = document.getElementById('installBtnPopup');
+const closeInstallPopup = document.getElementById('closeInstallPopup');
+const floatingInstallBtn = document.getElementById('floatingInstallBtn');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    
+    if (!sessionStorage.getItem('installDismissed')) {
+        installPopup.style.display = 'flex';
+        setTimeout(() => installPopup.classList.add('show'), 100);
+    } else {
+        floatingInstallBtn.classList.add('show');
+    }
+});
+
+const handleInstall = async () => {
+    if (!deferredPrompt) return;
+    
+    installPopup.classList.remove('show');
+    floatingInstallBtn.classList.remove('show');
+    
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    
+    if (outcome !== 'accepted') {
+        floatingInstallBtn.classList.add('show');
+    }
+};
+
+installBtnPopup.addEventListener('click', handleInstall);
+floatingInstallBtn.addEventListener('click', handleInstall);
+
+closeInstallPopup.addEventListener('click', () => {
+    installPopup.classList.remove('show');
+    setTimeout(() => {
+        installPopup.style.display = 'none';
+        floatingInstallBtn.classList.add('show');
+    }, 400);
+    sessionStorage.setItem('installDismissed', 'true');
+});
+
+window.addEventListener('appinstalled', () => {
+    installPopup.style.display = 'none';
+    floatingInstallBtn.classList.remove('show');
+    deferredPrompt = null;
 });

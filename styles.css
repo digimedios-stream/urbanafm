@@ -434,3 +434,103 @@ body {
 .app-footer p {
     margin: 5px 0;
 }
+
+/* Install Popup */
+.install-popup {
+    position: fixed;
+    top: -150px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(15, 16, 26, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(250, 25, 91, 0.3);
+    padding: 20px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 400px;
+    z-index: 2000;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+    transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: none;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.install-popup.show {
+    top: 20px;
+}
+
+.install-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.install-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+.install-text h3 {
+    font-size: 1.1rem;
+    color: white;
+    margin-bottom: 5px;
+}
+
+.install-text p {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.install-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.install-btn-primary {
+    flex: 1;
+    background: var(--gradient);
+    border: none;
+    padding: 10px;
+    border-radius: 12px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.install-btn-secondary {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    padding: 10px;
+    border-radius: 12px;
+    color: white;
+    cursor: pointer;
+}
+
+/* Floating Install Button */
+.floating-install-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 20px;
+    background: var(--gradient);
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(250, 25, 91, 0.4);
+    z-index: 1000;
+    transform: scale(0);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.floating-install-btn.show {
+    transform: scale(1);
+}

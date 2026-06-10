@@ -122,6 +122,28 @@
     <!-- Toast para notificaciones -->
     <div id="toast" class="toast"></div>
 
+    <!-- Popup de Instalación -->
+    <div id="installPopup" class="install-popup">
+        <div class="install-content">
+            <img src="icon.png" alt="Urbana Logo" class="install-icon">
+            <div class="install-text">
+                <h3>Instalar FM Urbana</h3>
+                <p>Agrega la radio a tu inicio para escuchar con un solo toque.</p>
+            </div>
+        </div>
+        <div class="install-actions">
+            <button id="installBtnPopup" class="install-btn-primary">Instalar</button>
+            <button id="closeInstallPopup" class="install-btn-secondary">Ahora no</button>
+        </div>
+    </div>
+
+    <!-- Botón flotante de Instalación -->
+    <button id="floatingInstallBtn" class="floating-install-btn" title="Instalar Aplicación">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+            <path fill="currentColor" d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+        </svg>
+    </button>
+
     <script src="script.js"></script>
 </body>
 
