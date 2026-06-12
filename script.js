@@ -507,6 +507,34 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(() => console.log('Service Worker registrado'))
             .catch(err => console.log('Error en Service Worker:', err));
     }
+
+    // Botón Compartir
+    const shareBtn = document.getElementById('shareBtn');
+    if (shareBtn) {
+        shareBtn.addEventListener('click', async () => {
+            const shareData = {
+                title: 'FM Urbana 103.5',
+                text: 'Escucha la mejor música en FM Urbana 103.5 en vivo',
+                url: 'https://digimedios-stream.github.io/urbanafm/'
+            };
+
+            try {
+                if (navigator.share) {
+                    await navigator.share(shareData);
+                } else {
+                    await navigator.clipboard.writeText(shareData.url);
+                    const toast = document.getElementById('toast');
+                    toast.textContent = 'Enlace copiado al portapapeles';
+                    toast.classList.add('show');
+                    setTimeout(() => toast.classList.remove('show'), 3000);
+                }
+            } catch (err) {
+                if (err.name !== 'AbortError') {
+                    console.error('Error al compartir:', err);
+                }
+            }
+        });
+    }
 });
 
 // PWA Install Prompt Logic
